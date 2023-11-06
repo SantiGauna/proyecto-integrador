@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROYECTO LA LOMA / EROLES-GAUNA-LAZARO</title>
+
+
+    <link rel="stylesheet" href="styles/page.css">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/table.css">
+    <link rel="stylesheet" href="styles/form.css">
+
+</head>
+
+<body>
+
+    <div class="content">
+
+        <header>
+
+            <img src = "/PaginaWeb/img/logo.jpeg" class = "logo">
+            <h1>ROSTISERIA LA LOMA</h1>
+
+        </header>
+
+        <aside>
+            <nav class="menu">
+                <h4>MENU</h4>
+                <a href="ListadoJSProducto.html">Listado Productos</a>
+                <a href="AltaProducto.html">Alta Productos</a>
+                <a href="ModificarProducto.html">Modificación Productos</a>
+                <a href="EliminarProducto.html">Eliminación Productos</a>
+                <a href="Home.html">Inicio</a>
+
+
+            </nav>
+
+            <p>
+                CONTROL DE GESTION 
+            </p>
+
+            <h5>ROSTISERIA LA LOMA</h5>
+
+
+        </aside>
+        <main>
+
+            <section>
+                <h4>Eliminación Producto</h4>
+
+                <form action="">
+
+                    <div id="filtros">
+
+                        <p>
+                            <label for="txtId">Id</label>
+                            <input id="txtId" type="text">
+                            <input type="button" value="Buscar" id="btnBuscar" onclick="Buscar()">
+
+                        </p>
+
+                    </div>
+
+                    <div id="datos">
+                        <p>
+                            <label for="txtNombre">Nombre</label>
+                            <input id="txtNombre" type="text" disabled>
+
+                        </p>
+
+
+                        <p>
+                            <label for="txtDescripcion">Descripcion</label>
+                            <input id="txtDescripcion" type="text" disabled>
+
+                        </p>
+
+                        <p>
+                            <label for="txtPrecio">Precio</label>
+                            <input id="txtPrecio" type="number" disabled>
+
+                        </p>
+
+                        <p>
+                            <input type="button" value="Eliminar" id="btnEliminar" onclick="Eliminar()">
+                        </p>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+
+        <footer>
+            <h5> DESARROLLO BY EROLES-GAUNA-LAZARO </h5>
+        </footer>
+
+
+
+    </div>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script>
+
+    <script>
+
+        function Buscar() {
+            const id = document.getElementById("txtId")
+
+            get(parseInt(id.value))
+        }
+
+        function Eliminar() {
+
+
+            const id = document.getElementById("txtId")
+
+
+            del(parseInt(id.value))
+
+
+
+        }
+
+
+        function get(id) {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "http://localhost:50739/api/Producto/" + id,
+                success: function (data) {
+                    console.log(data)
+
+                    const nombre = document.getElementById("txtNombre")
+                    const descripcion = document.getElementById("txtDescripcion")
+                    const precio = document.getElementById("txtPrecio")
+
+                    nombre.value = data.Nombre
+                    descripcion.value = data.Descripcion
+                    precio.value = data.Precio
+
+
+                }
+
+            })
+
+        }
+
+        function del(id) {
+            $.ajax({
+                type: "Delete",
+                dataType: "json",
+                url: "http://localhost:50739/api/Producto/" + id,
+                success: function (data) {
+                    alert("Proceso Exitoso!")
+
+                    const nombre = document.getElementById("txtNombre")
+                    const descripcion = document.getElementById("txtDescripcion")
+                    const id = document.getElementById("txtId")
+                    const precio = document.getElementById("txtPrecio")
+
+                    id.value = ""
+                    nombre.value = ""
+                    descripcion.value = ""
+                    precio.value =""
+
+
+                }
+            })
+
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROYECTO LA LOMA / EROLES-GAUNA-LAZARO</title>
+
+
+    <link rel="stylesheet" href="styles/page.css">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/table.css">
+    <link rel="stylesheet" href="styles/form.css">
+
+</head>
+
+<body>
+
+    <div class="content">
+
+        <header>
+
+            <img src = "/PaginaWeb/img/logo.jpeg" class = "logo">
+            <h1>ROSTISERIA LA LOMA</h1>
+
+        </header>
+
+        <aside>
+            <nav class="menu">
+                <h4>MENU</h4>
+                <a href="ListadoJSPedido.html">Listado Pedidos</a>
+                <a href="AltaPedido.html">Alta Pedidos</a>
+                <a href="ModificarPedido.html">Modificación Pedidos</a>
+                <a href="EliminarPedido.html">Eliminación Pedidos</a>
+                <a link href="Home.html">Inicio</a>
+
+            </nav>
+
+            <p>
+                CONTROL DE GESTION
+            </p>
+
+            <h5>ROSTISERIA LA LOMA</h5>
+
+
+        </aside>
+
+        <main>
+
+            <section>
+                <h4>Alta Pedido</h4>
+
+                <form action="">
+                    <p>
+                        <label for="txtIdCliente">IdCliente</label>
+                        <input id="txtIdCliente" type="number">
+                    </p>
+
+                    <p>
+                        <label for="txtIdProducto">IdProducto</label>
+                        <input id="txtIdProducto" type="number">
+                    </p>
+
+                    <p>
+                        <label for="txtFecha">Fecha</label>
+                        <input id="txtFecha" type="date">
+                    </p>
+
+                    <p>
+                        <input type="button" value="Guardar" id="btnGuardar" onclick="Guardar()">
+                    </p>
+                </form>
+
+            </section>
+
+        </main>
+
+        <footer>
+            <h5> DESARROLLO BY EROLES-GAUNA-LAZARO </h5>
+        </footer>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script>
+
+    <script>
+
+        function Guardar() {
+
+
+            const idCliente = document.getElementById("txtIdCliente")
+            const idProducto = document.getElementById("txtIdProducto")
+            const fecha = document.getElementById("txtFecha")
+
+
+            obj = {
+                "IdCliente": idCliente.value,
+                "IdProducto": idProducto.value,
+                "Fecha": fecha.value,
+            }
+
+            //  console.log(obj)
+
+            if (idCliente.value && idProducto.value && fecha.value) {
+
+                post(obj)
+
+            } else {
+
+                alert("Error - Complete todos los campos")
+             
+            }
+
+        }
+
+
+
+
+        function post(obj) {
+
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                data: obj,
+                url: "http://localhost:50739/api/Pedido",
+                success: function (data) {
+                    alert("Proceso Exitoso!")
+
+                    const idCliente = document.getElementById("txtIdCliente")
+                    const idProducto = document.getElementById("txtIdProducto")
+                    const fecha = document.getElementById("txtFecha")
+
+                    idCliente.value = ""
+                    idProducto.value = ""
+                    fecha.value = ""
+
+                }
+
+
+            })
+        }
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

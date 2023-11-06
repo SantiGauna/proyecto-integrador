@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROYECTO LA LOMA / EROLES-GAUNA-LAZARO</title>
+
+
+    <link rel="stylesheet" href="styles/page.css">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/table.css">
+    <link rel="stylesheet" href="styles/form.css">
+
+</head>
+
+<body>
+
+    <div class="content">
+
+        <header>
+        
+           <img src = "/PaginaWeb/img/logo.jpeg" class = "logo">
+           <h1>ROSTISERIA LA LOMA</h1>
+
+        </header>
+
+        <aside>
+            <nav class="menu">
+                <h4>MENU</h4>
+                <a href="ListadoJSCliente.html">Listado Clientes</a>
+                <a href="AltaCliente.html">Alta Clientes</a>
+                <a href="ModificarCliente.html">Modificación Clientes</a>
+                <a href="EliminarCliente.html">Eliminación Clientes</a>
+                <a link href="Home.html">Inicio</a>
+
+            </nav>
+
+            <p>
+                CONTROL DE GESTION
+            </p>
+
+            <h5>ROSTISERIA LA LOMA</h5>
+
+
+        </aside>
+
+        <main>
+
+            <section>
+                <h4>Alta Cliente</h4>
+
+                <form action="">
+                    <p>
+                        <label for="txtNombre">Nombre</label>
+                        <input id="txtNombre" type="text">
+                    </p>
+
+                    <p>
+                        <label for="txtApellido">Apellido</label>
+                        <input id="txtApellido" type="text">
+                    </p>
+
+                    <p>
+                        <label for="txtDireccion">Direccion</label>
+                        <input id="txtDireccion" type="text">
+                    </p>
+
+                    <p>
+                        <input type="button" value="Guardar" id="btnGuardar" onclick="Guardar()">
+                    </p>
+                </form>
+
+            </section>
+
+        </main>
+
+        <footer>
+            <h5> DESARROLLO BY EROLES-GAUNA-LAZARO </h5>
+        </footer>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script>
+
+    <script>
+
+        function Guardar() {
+
+
+            const nombre = document.getElementById("txtNombre")
+            const apellido = document.getElementById("txtApellido")
+            const direccion = document.getElementById("txtDireccion")
+
+
+            obj = {
+                "Nombre": nombre.value,
+                "Apellido": apellido.value,
+                "Direccion": direccion.value,
+            }
+
+            //  console.log(obj)
+
+            if (nombre.value && apellido.value && direccion.value) {
+
+                post(obj)
+
+            } else {
+
+                alert("Error - Complete todos los campos")
+             
+            }
+
+        }
+
+
+
+
+        function post(obj) {
+
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                data: obj,
+                url: "http://localhost:50739/api/Cliente",
+                success: function (data) {
+                    alert("Proceso Exitoso!")
+
+                    const nombre = document.getElementById("txtNombre")
+                    const apellido = document.getElementById("txtApellido")
+                    const direccion = document.getElementById("txtDireccion")
+
+                    nombre.value = ""
+                    apellido.value = ""
+                    direccion.value = ""
+
+                }
+
+
+            })
+        }
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
