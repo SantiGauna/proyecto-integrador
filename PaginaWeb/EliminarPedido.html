@@ -1,188 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PROYECTO LA LOMA / EROLES-GAUNA-LAZARO</title>
 
+    <link rel="stylesheet" href="styles/page.css" />
+    <link rel="stylesheet" href="styles/menu.css" />
+    <link rel="stylesheet" href="styles/table.css" />
+    <link rel="stylesheet" href="styles/form.css" />
+  </head>
 
-    <link rel="stylesheet" href="styles/page.css">
-    <link rel="stylesheet" href="styles/menu.css">
-    <link rel="stylesheet" href="styles/table.css">
-    <link rel="stylesheet" href="styles/form.css">
-
-</head>
-
-<body>
-
+  <body>
     <div class="content">
+      <header>
+        <img src="/PaginaWeb/img/logo.jpeg" class="logo" />
+        <h1>ROSTISERIA LA LOMA</h1>
+      </header>
 
-        <header>
+      <aside>
+        <nav class="menu">
+          <h4>MENU</h4>
+          <a href="ListadoJSPedido.html">Listado Pedidos</a>
+          <a href="AltaPedido.html">Alta Pedidos</a>
+          <a href="ModificarPedido.html">Modificación Pedidos</a>
+          <a href="EliminarPedido.html">Eliminación Pedidos</a>
+          <a link href="Home.html">Inicio</a>
+        </nav>
 
-            <img src = "/PaginaWeb/img/logo.jpeg" class = "logo">
-            <h1>ROSTISERIA LA LOMA</h1>
+        <p>CONTROL DE GESTION</p>
 
-        </header>
+        <h5>ROSTISERIA LA LOMA</h5>
+      </aside>
+      <main>
+        <section>
+          <h4>Eliminación Pedido</h4>
 
-        <aside>
-            <nav class="menu">
-                <h4>MENU</h4>
-                <a href="ListadoJSPedido.html">Listado Pedidos</a>
-                <a href="AltaPedido.html">Alta Pedidos</a>
-                <a href="ModificarPedido.html">Modificación Pedidos</a>
-                <a href="EliminarPedido.html">Eliminación Pedidos</a>
-                <a link href="Home.html">Inicio</a>
+          <form action="">
+            <div id="filtros">
+              <p>
+                <label for="txtId">Id</label>
+                <input id="txtId" type="text" />
+                <input
+                  type="button"
+                  value="Buscar"
+                  id="btnBuscar"
+                  onclick="Buscar()"
+                />
+              </p>
+            </div>
 
-            </nav>
+            <div id="datos">
+              <p>
+                <label for="txtIdCliente">IdCliente</label>
+                <input id="txtIdCliente" type="number" disabled />
+              </p>
 
-            <p>
-                CONTROL DE GESTION
-            </p>
+              <p>
+                <label for="txtIdProducto">IdProducto</label>
+                <input id="txtIdProducto" type="number" disabled />
+              </p>
 
-            <h5>ROSTISERIA LA LOMA</h5>
+              <p>
+                <label for="txtFecha">Fecha</label>
+                <input id="txtFecha" type="text" disabled />
+              </p>
 
-        </aside>
-        <main>
+              <p>
+                <input
+                  type="button"
+                  value="Eliminar"
+                  id="btnEliminar"
+                  onclick="Eliminar()"
+                />
+              </p>
+            </div>
+          </form>
+        </section>
+      </main>
 
-            <section>
-                <h4>Eliminación Pedido</h4>
-
-                <form action="">
-
-                    <div id="filtros">
-
-                        <p>
-                            <label for="txtId">Id</label>
-                            <input id="txtId" type="text">
-                            <input type="button" value="Buscar" id="btnBuscar" onclick="Buscar()">
-
-                        </p>
-
-                    </div>
-
-                    <div id="datos">
-                        <p>
-                            <label for="txtIdCliente">IdCliente</label>
-                            <input id="txtIdCliente" type="number" disabled>
-
-                        </p>
-
-
-                        <p>
-                            <label for="txtIdProducto">IdProducto</label>
-                            <input id="txtIdProducto" type="number" disabled>
-
-                        </p>
-
-                        <p>
-                            <label for="txtFecha">Fecha</label>
-                            <input id="txtFecha" type="date" disabled>
-
-                        </p>
-
-
-                        <p>
-                            <input type="button" value="Eliminar" id="btnEliminar" onclick="Eliminar()">
-                        </p>
-
-                    </div>
-
-                </form>
-
-            </section>
-
-        </main>
-
-
-        <footer>
-            <h5> DESARROLLO BY EROLES-GAUNA-LAZARO </h5>
-        </footer>
-
-
-
+      <footer>
+        <h5>DESARROLLO BY EROLES-GAUNA-LAZARO</h5>
+      </footer>
     </div>
 
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
+      function Buscar() {
+        const id = document.getElementById("txtId");
 
-        function Buscar() {
-            const id = document.getElementById("txtId")
+        get(parseInt(id.value));
 
-            get(parseInt(id.value))
-
-            if (id.value) {
-
-            } else {
-
-                alert("Error - Ingrese un ID")
-            }
+        if (id.value) {
+        } else {
+          alert("Error - Ingrese un ID");
         }
+      }
 
+      function get(id) {
+        $.ajax({
+          type: "GET",
+          dataType: "json",
+          url: "http://localhost:50739/api/Pedido/" + id,
+          success: function (data) {
+            console.log(data);
 
+            const idCliente = document.getElementById("txtIdCliente");
+            const idProducto = document.getElementById("txtIdProducto");
+            const fecha = document.getElementById("txtFecha");
 
+            idCliente.value = data.IdCliente;
+            idProducto.value = data.IdCliente;
+            fecha.value = data.Fecha;
+          },
+        });
+      }
+      function Eliminar() {
+        const id = document.getElementById("txtId");
 
-        function get(id) {
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: "http://localhost:50739/api/Pedido/" + id,
-                success: function (data) {
-                    console.log(data)
+        del(parseInt(id.value));
+      }
 
-                    const idCliente = document.getElementById("txtIdCliente")
-                    const idProducto = document.getElementById("txtIdProducto")
-                    const fecha = document.getElementById("txtFecha")
+      function del(id) {
+        $.ajax({
+          type: "Delete",
+          dataType: "json",
+          url: "http://localhost:50739/api/Pedido/" + id,
+          success: function (data) {
+            alert("Proceso Exitoso!");
 
+            const id = document.getElementById("txtId");
+            const idCliente = document.getElementById("txtIdCliente");
+            const idProducto = document.getElementById("txtIdProducto");
+            const fecha = document.getElementById("txtFecha");
 
-                    idCliente.value = data.IdCliente
-                    idProducto.value = data.IdCliente
-                    fecha.value = data.Fecha
-
-
-                }
-
-            })
-
-        }
-
-
-        function del(id) {
-            $.ajax({
-                type: "Delete",
-                dataType: "json",
-                url: "http://localhost:50739/api/Pedido/" + id,
-                success: function (data) {
-                    alert("Proceso Exitoso!")
-
-
-                    const id = document.getElementById("txtId")
-                    const idCliente = document.getElementById("txtIdCliente")
-                    const idProducto = document.getElementById("txtIdProducto")
-                    const fecha = document.getElementById("txtFecha")
-
-
-
-                    id.value = ""
-                    idCliente.value = ""
-                    idProducto.value = ""
-                    fecha.value = ""
-
-
-                }
-            })
-
-
-        }
-
+            id.value = "";
+            idCliente.value = "";
+            idProducto.value = "";
+            fecha.value = "";
+          },
+        });
+      }
     </script>
-
-
-</body>
-
+  </body>
 </html>
